@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05080c">
+  <title>BMW | Admin Access</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+  <main class="dashboard-layout">
+    <section class="visual-panel">
+      <div class="visual-image" role="img" aria-label="A high-performance BMW-inspired sports car on a dramatic road"></div>
+      <div class="image-shade"></div>
+      <a class="mini-brand" href="index.html" aria-label="Back to intro">
+        <div class="bmw-roundel small"><span>BMW</span><i></i></div>
+        <span>BMW <b>M</b></span>
+      </a>
+      <div class="visual-copy">
+        <p class="eyebrow"><span></span> BUILT FOR THE BOLD</p>
+        <h1>PURE<br><em>ADRENALINE.</em></h1>
+        <p>Performance is not just a number.<br>It's a feeling.</p>
+        <div class="spec-line"><span>01</span><i></i><span>PRECISION · POWER · CONTROL</span></div>
+      </div>
+      <div class="image-bottom"><span>THE ART OF PERFORMANCE</span><span>/// M</span></div>
+    </section>
+    <section class="login-side">
+      <div class="floating-orb orb-one"></div><div class="floating-orb orb-two"></div>
+      <div class="login-top"><a href="index.html">← BACK TO INTRO</a><span class="secure-label"><i></i> SECURE ACCESS</span></div>
+      <div class="login-card">
+        <div class="card-mark"><div class="bmw-roundel small"><span>BMW</span><i></i></div><span>CONTROL CENTER</span></div>
+        <p class="eyebrow">WELCOME BACK</p>
+        <h2>Admin <em>Portal.</em></h2>
+        <p class="card-description">Sign in to access your dashboard.</p>
+        <form id="loginForm">
+          <label for="username">USERNAME</label>
+          <div class="input-wrap"><span class="field-icon">♙</span><input id="username" name="username" autocomplete="username" placeholder="Enter admin username" required></div>
+          <label for="password">PASSWORD</label>
+          <div class="input-wrap"><span class="field-icon">⌑</span><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter password" required><button type="button" id="togglePassword" class="toggle-password" aria-label="Show password">◉</button></div>
+          <button class="login-button" type="submit">SIGN IN <span>↗</span></button>
+          <p id="loginMessage" class="login-message" role="status"></p>
+        </form>
+        <div class="login-note"><span>ⓘ</span> Demo interface only. Connect a secure authentication backend before using real accounts.</div>
+      </div>
+      <footer class="login-footer"><span>BMW M PERFORMANCE</span><span>© <span id="year"></span> · CONCEPT WEBSITE</span></footer>
+    </section>
+  </main>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

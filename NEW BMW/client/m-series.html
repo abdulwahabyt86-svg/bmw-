@@ -1,0 +1,593 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050a11">
+  <meta name="description" content="Explore the BMW M experience, discover M Series models, and visit the developer page.">
+  <title>BMW M Experience</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+    :root {
+      --blue: #168bff;
+      --cyan: #55dfff;
+      --white: #f4f8ff;
+      --muted: #aabbd0;
+      --panel: #071321;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--white);
+      font-family: 'Rajdhani', sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 45%, #123351 0%, transparent 55%),
+        linear-gradient(135deg, #03060b, #071321 60%, #020407);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      opacity: .65;
+      background-image:
+        linear-gradient(#368bff12 1px, transparent 1px),
+        linear-gradient(90deg, #368bff12 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 24px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .brand span, .hero-title span, .logo-text span, .modal-panel h2 span {
+      color: var(--cyan);
+    }
+
+    .back-link {
+      color: #d2dfef;
+      text-decoration: none;
+      border: 1px solid #ffffff30;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      transition: .25s ease;
+    }
+
+    .back-link:hover {
+      color: white;
+      border-color: var(--blue);
+      box-shadow: 0 0 18px #168bff30;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 105px 20px 50px;
+    }
+
+    .eyebrow {
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      line-height: 1.8;
+    }
+
+    .hero-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(27px, 5vw, 48px);
+      line-height: 1.3;
+      margin: 18px 0;
+    }
+
+    .hero-description {
+      max-width: 530px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 35px;
+    }
+
+    .logo-button {
+      position: relative;
+      isolation: isolate;
+      width: 185px;
+      height: 185px;
+      border: 2px solid #d8e7f5;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 25%, #183958, #03070c 72%);
+      color: white;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 0 24px #168bff55, 0 0 65px #168bff22, inset 0 0 30px #168bff20;
+      animation: float 3.5s ease-in-out infinite;
+      transition: transform .6s, opacity .6s, box-shadow .3s;
+    }
+
+    .logo-button::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid #ffffff65;
+      border-radius: 50%;
+    }
+
+    .logo-button::after {
+      content: "";
+      position: absolute;
+      inset: -9px;
+      border: 1px solid #168bff40;
+      border-radius: 50%;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    .logo-button:hover {
+      box-shadow: 0 0 35px #168bff85, 0 0 85px #168bff30;
+    }
+
+    .logo-button:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 14px;
+    }
+
+    .logo-text {
+      position: relative;
+      z-index: 1;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 0 18px #55dfff70;
+    }
+
+    .click-hint {
+      color: #aabbd0;
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-top: 30px;
+      animation: pulse 2s infinite;
+    }
+
+    .choices {
+      display: none;
+      width: min(900px, 100%);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .choices.show {
+      display: grid;
+      animation: fadeIn .65s ease both;
+    }
+
+    .choice {
+      position: relative;
+      min-height: 155px;
+      display: block;
+      overflow: hidden;
+      text-align: left;
+      text-decoration: none;
+      color: white;
+      border: 1px solid #48aaff55;
+      border-radius: 12px;
+      padding: 23px;
+      background: linear-gradient(140deg, #112940, #050b13);
+      cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+
+    .choice::before {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      right: -65px;
+      top: -65px;
+      border-radius: 50%;
+      background: #168bff22;
+      filter: blur(25px);
+      pointer-events: none;
+    }
+
+    .choice:hover {
+      transform: translateY(-5px);
+      border-color: var(--cyan);
+      box-shadow: 0 12px 35px #007dff22;
+    }
+
+    .choice:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    .choice-icon {
+      display: block;
+      font-size: 29px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .choice strong {
+      display: block;
+      position: relative;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      line-height: 1.7;
+      letter-spacing: .8px;
+    }
+
+    .choice p {
+      position: relative;
+      color: var(--muted);
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      background: #000c;
+      backdrop-filter: blur(12px);
+    }
+
+    .modal.open {
+      display: flex;
+      animation: fadeIn .25s ease;
+    }
+
+    .modal-panel {
+      position: relative;
+      width: min(600px, 100%);
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: clamp(25px, 5vw, 42px);
+      border: 1px solid #48aaff66;
+      border-radius: 14px;
+      background:
+        radial-gradient(ellipse at top right, #168bff20, transparent 55%),
+        var(--panel);
+      box-shadow: 0 0 55px #007dff20;
+      animation: rise .3s ease both;
+    }
+
+    .close-button {
+      position: absolute;
+      right: 13px;
+      top: 13px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #ffffff35;
+      color: white;
+      background: #ffffff10;
+      cursor: pointer;
+      font-size: 23px;
+    }
+
+    .close-button:hover {
+      background: #168bff30;
+      border-color: var(--cyan);
+    }
+
+    .modal-panel h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(22px, 5vw, 32px);
+      line-height: 1.4;
+      margin: 16px 0;
+    }
+
+    .modal-panel p {
+      color: #c0cede;
+      font-size: 18px;
+      line-height: 1.7;
+      margin: 13px 0;
+      overflow-wrap: anywhere;
+    }
+
+    .dev-message {
+      border-left: 3px solid var(--cyan);
+      padding: 14px;
+      background: #168bff15;
+      color: white !important;
+      margin: 22px 0 !important;
+    }
+
+    .dev-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      max-width: 100%;
+      padding: 14px 18px;
+      border: 1px solid #38aaff;
+      border-radius: 7px;
+      color: white;
+      background: linear-gradient(135deg, #0877c9, #123b68);
+      text-decoration: none;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      overflow-wrap: anywhere;
+      transition: transform .25s, box-shadow .25s;
+    }
+
+    .dev-link:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 24px #38aaff55;
+    }
+
+    .dev-url {
+      font-size: 13px !important;
+      color: #87d6ff !important;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .footer {
+      padding: 20px;
+      text-align: center;
+      color: #7389a2;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      line-height: 1.8;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { transform: scale(1); opacity: .35; }
+      50% { transform: scale(1.06); opacity: .8; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: .5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 18px 5%; }
+      .brand { font-size: 11px; letter-spacing: 1px; }
+      .back-link { padding: 8px 10px; font-size: 11px; }
+      .hero { padding: 100px 18px 45px; }
+      .eyebrow { font-size: 10px; letter-spacing: 2px; }
+      .logo-button { width: 155px; height: 155px; }
+      .logo-text { font-size: 21px; }
+      .choices { grid-template-columns: 1fr; gap: 12px; }
+      .choice { min-height: 125px; padding: 18px; }
+      .choice-icon { margin-bottom: 7px; }
+      .modal { padding: 12px; }
+      .modal-panel { padding: 32px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="brand">BMW <span>M</span> EXPERIENCE</div>
+    <a class="back-link" href="dashboard.html">← BACK</a>
+  </header>
+
+  <main class="hero">
+    <p class="eyebrow">PRECISION • POWER • PERFORMANCE</p>
+
+    <h1 class="hero-title">
+      WELCOME TO THE <span>M WORLD</span>
+    </h1>
+
+    <p class="hero-description">
+      Discover BMW M performance, explore the latest models,
+      and visit the developer page behind this experience.
+    </p>
+
+    <button
+      class="logo-button"
+      id="bmwLogo"
+      type="button"
+      aria-label="Click the BMW logo to explore"
+      aria-expanded="false"
+    >
+      <span class="logo-text">BMW <span>M</span></span>
+    </button>
+
+    <p class="click-hint" id="clickHint">
+      CLICK THE LOGO TO EXPLORE
+    </p>
+
+    <section class="choices" id="choices" aria-label="BMW M options">
+      <button class="choice" type="button" data-modal="introModal">
+        <span class="choice-icon">🏁</span>
+        <strong>M-SERIES INTRO</strong>
+        <p>Discover the performance spirit of BMW M.</p>
+      </button>
+
+      <a class="choice" href="models.html">
+        <span class="choice-icon">🚘</span>
+        <strong>EXPLORE M SERIES MODELS</strong>
+        <p>See car pictures, specifications, features, and starting prices.</p>
+      </a>
+
+      <button class="choice" type="button" data-modal="devModal">
+        <span class="choice-icon">💻</span>
+        <strong>DEV INFO</strong>
+        <p>Visit the developer's page.</p>
+      </button>
+
+      <button class="choice" type="button" data-action="reset">
+        <span class="choice-icon">↻</span>
+        <strong>BACK TO BMW LOGO</strong>
+        <p>Return to the floating logo screen.</p>
+      </button>
+    </section>
+  </main>
+
+  <section class="modal" id="introModal" role="dialog" aria-modal="true" aria-labelledby="introTitle" aria-hidden="true">
+    <div class="modal-panel">
+      <button class="close-button" type="button" aria-label="Close">×</button>
+      <p class="eyebrow">ENGINEERED FOR DRIVING ENTHUSIASTS</p>
+      <h2 id="introTitle">THE <span>BMW M EXPERIENCE</span></h2>
+      <p>BMW M represents motorsport-inspired engineering, responsive performance, distinctive design, and advanced driving technology.</p>
+      <p>Explore performance coupes, powerful sedans, electrified models, and high-performance SUVs in the showroom.</p>
+      <p><a class="dev-link" href="models.html">EXPLORE M SERIES MODELS ↗</a></p>
+    </div>
+  </section>
+
+  <section class="modal" id="devModal" role="dialog" aria-modal="true" aria-labelledby="devTitle" aria-hidden="true">
+    <div class="modal-panel">
+      <button class="close-button" type="button" aria-label="Close">×</button>
+      <p class="eyebrow">DEVELOPER PROFILE</p>
+      <h2 id="devTitle">BUILT BY <span>WAHAB</span></h2>
+      <p>Welcome to my developer page! Open the link below to explore my DEV info.</p>
+      <p class="dev-message">📋 Copy and paste into Chrome For DEV info</p>
+      <a class="dev-link" href="https://calm-queen-3d20.abdulwahabyt86.workers.dev/" target="_blank" rel="noopener noreferrer">OPEN DEV INFO ↗</a>
+      <p class="dev-url">https://calm-queen-3d20.abdulwahabyt86.workers.dev/</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    BMW M SERIES EXPERIENCE
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const logo = document.getElementById("bmwLogo");
+      const choices = document.getElementById("choices");
+      const clickHint = document.getElementById("clickHint");
+      const modals = document.querySelectorAll(".modal");
+      let logoOpened = false;
+
+      function openModal(modal) {
+        if (!modal) return;
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        const closeButton = modal.querySelector(".close-button");
+        if (closeButton) closeButton.focus();
+      }
+
+      function closeModal(modal) {
+        if (!modal) return;
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+
+      function revealChoices() {
+        if (logoOpened) return;
+        logoOpened = true;
+        logo.setAttribute("aria-expanded", "true");
+        logo.style.transform = "scale(.2) rotate(35deg)";
+        logo.style.opacity = "0";
+        clickHint.hidden = true;
+
+        window.setTimeout(() => {
+          logo.style.display = "none";
+          choices.classList.add("show");
+        }, 550);
+      }
+
+      function resetLogo() {
+        choices.classList.remove("show");
+        logo.style.display = "grid";
+        logo.style.opacity = "0";
+        logo.style.transform = "scale(.5)";
+        clickHint.hidden = false;
+        logoOpened = false;
+        logo.setAttribute("aria-expanded", "false");
+
+        window.requestAnimationFrame(() => {
+          logo.style.opacity = "1";
+          logo.style.transform = "";
+        });
+      }
+
+      logo.addEventListener("click", revealChoices);
+
+      document.querySelectorAll("[data-modal]").forEach(button => {
+        button.addEventListener("click", () => {
+          openModal(document.getElementById(button.dataset.modal));
+        });
+      });
+
+      document.querySelectorAll(".close-button").forEach(button => {
+        button.addEventListener("click", () => {
+          closeModal(button.closest(".modal"));
+        });
+      });
+
+      modals.forEach(modal => {
+        modal.addEventListener("click", event => {
+          if (event.target === modal) closeModal(modal);
+        });
+      });
+
+      document.querySelector('[data-action="reset"]').addEventListener("click", resetLogo);
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") modals.forEach(closeModal);
+      });
+    });
+  </script>
+</body>
+</html>

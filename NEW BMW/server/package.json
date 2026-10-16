@@ -1,0 +1,13 @@
+{
+  "name": "bmw-animated-experience",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BMW-inspired animated website and web app concept",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

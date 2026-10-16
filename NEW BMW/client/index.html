@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#05080c">
+  <title>BMW | Sheer Driving Pleasure</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="intro-body">
+  <main class="intro-screen">
+    <div class="intro-grid" aria-hidden="true"></div>
+    <div class="intro-glow" aria-hidden="true"></div>
+    <header class="intro-brand">
+      <div class="bmw-roundel" aria-label="BMW inspired roundel"><span>BMW</span><i></i></div>
+      <span class="brand-word">THE ULTIMATE<br><b>DRIVING MACHINE</b></span>
+    </header>
+    <div class="intro-copy">
+      <p class="eyebrow"><span></span> THE NEXT CHAPTER STARTS HERE</p>
+      <h1>ENGINEERED<br>TO <em>THRILL.</em></h1>
+      <p class="intro-subtitle">Precision in every line. Power in every moment.</p>
+      <button id="startButton" class="main-button" type="button"><span>START EXPERIENCE</span><b>↗</b></button>
+    </div>
+    <div class="intro-footer"><span>BMW M PERFORMANCE</span><span>01 — EXPERIENCE</span></div>
+    <section id="videoStage" class="video-stage" hidden aria-label="BMW introduction video">
+      <video id="introVideo" playsinline preload="auto">
+        <source src="assets/video/animated%20video.mp4" type="video/mp4">
+        Your browser does not support video playback.
+      </video>
+      <div class="video-vignette"></div>
+      <div class="video-caption"><span class="live-dot"></span> BMW EXPERIENCE <small>IN MOTION</small></div>
+      <button id="skipButton" class="skip-button" type="button">SKIP INTRO <span>↗</span></button>
+      <p id="videoMessage" class="video-message" hidden>Could not play the video. Check that <b>animated video.mp4</b> is inside <b>client/assets/video/</b>.</p>
+    </section>
+  </main>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

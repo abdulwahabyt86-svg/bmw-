@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMW M Series | Model Showroom</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+    :root{--blue:#168bff;--cyan:#55dfff;--bg:#050a11;--panel:#0b1522;--muted:#aabbd0}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:#f4f8ff;font-family:'Rajdhani',sans-serif}
+    body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,#12395a80,transparent 60%),linear-gradient(#258bff0b 1px,transparent 1px),linear-gradient(90deg,#258bff0b 1px,transparent 1px);background-size:auto,42px 42px,42px 42px}
+    a{color:inherit}
+    header{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:17px 5%;background:#050a11ef;border-bottom:1px solid #ffffff15;backdrop-filter:blur(16px)}
+    .brand{font:700 14px Orbitron,sans-serif;letter-spacing:2px}.brand span{color:var(--cyan)}
+    .back{border:1px solid #ffffff30;border-radius:5px;padding:9px 13px;text-decoration:none;font-size:13px}
+    .hero{padding:72px 6% 50px;max-width:1250px;margin:auto}
+    .eyebrow{color:var(--cyan);font:11px Orbitron,sans-serif;letter-spacing:4px}
+    h1,h2,h3{font-family:Orbitron,sans-serif}
+    h1{font-size:clamp(29px,5vw,57px);line-height:1.2;margin:18px 0}
+    .hero p.lead{max-width:720px;color:var(--muted);font-size:19px;line-height:1.65}
+    .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}
+    .stat{border:1px solid #ffffff1c;border-radius:7px;padding:11px 14px;color:#c5d7eb;background:#ffffff06;font-size:14px}
+    .toolbar{max-width:1250px;margin:0 auto;padding:0 6% 25px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+    .filters{display:flex;flex-wrap:wrap;gap:8px}
+    .filter{border:1px solid #ffffff26;background:#0b1522;color:#dbe8f6;border-radius:30px;padding:9px 15px;cursor:pointer;font:600 12px Orbitron,sans-serif}
+    .filter.active,.filter:hover{border-color:var(--cyan);background:#168bff25;color:white}
+    .search{background:#091321;border:1px solid #ffffff2a;border-radius:7px;padding:12px 14px;color:white;min-width:min(260px,100%);font:16px Rajdhani,sans-serif}
+    .grid{max-width:1250px;margin:0 auto;padding:0 6% 65px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+    .car-card{min-width:0;overflow:hidden;border:1px solid #ffffff18;border-radius:14px;background:linear-gradient(145deg,#0e1c2b,#070d15);transition:transform .25s,border-color .25s,box-shadow .25s}
+    .car-card:hover{transform:translateY(-5px);border-color:#168bff88;box-shadow:0 18px 45px #007dff17}
+    .car-image{height:255px;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,#193650,#07101a)}
+    .car-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .5s}
+    .car-card:hover .car-image img{transform:scale(1.04)}
+    .image-tag{position:absolute;left:14px;top:14px;padding:7px 10px;background:#03070bd9;border:1px solid #ffffff30;border-radius:4px;font:10px Orbitron,sans-serif;letter-spacing:1px}
+    .card-content{padding:23px}
+    .category{color:var(--cyan);font:10px Orbitron,sans-serif;letter-spacing:2px}
+    h2{font-size:clamp(18px,2vw,25px);line-height:1.4;margin:10px 0}
+    .description{color:var(--muted);font-size:17px;line-height:1.5;min-height:48px}
+    .price-label{color:#8fa6be;font-size:13px;margin-top:20px}
+    .price{font:700 clamp(21px,3vw,29px) Orbitron,sans-serif;margin-top:5px;color:white}
+    .price small{font:12px Rajdhani,sans-serif;color:var(--muted)}
+    .specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:22px 0}
+    .spec{padding:12px 9px;background:#ffffff07;border:1px solid #ffffff12;border-radius:7px;min-width:0}
+    .spec strong{display:block;font:700 15px Orbitron,sans-serif;overflow-wrap:anywhere}
+    .spec span{display:block;color:#8fa6be;font-size:12px;margin-top:6px}
+    details{border-top:1px solid #ffffff18;padding-top:14px}
+    summary{cursor:pointer;color:#c9d9eb;font-weight:700;font-size:16px}
+    details p{color:var(--muted);line-height:1.6;font-size:16px}
+    .note{max-width:1250px;margin:0 auto 55px;padding:0 6%;color:#91a6bd;font-size:14px;line-height:1.7}
+    .empty{display:none;grid-column:1/-1;text-align:center;color:var(--muted);padding:45px}
+    footer{text-align:center;border-top:1px solid #ffffff15;padding:25px;color:#72869f;font-size:11px;letter-spacing:2px}
+    @media(max-width:760px){.grid{grid-template-columns:1fr;padding-left:5%;padding-right:5%}.hero{padding:55px 5% 35px}.toolbar{padding-left:5%;padding-right:5%}.car-image{height:230px}.card-content{padding:20px}}
+    @media(max-width:420px){header{padding:15px 4%}.brand{font-size:11px;letter-spacing:1px}.car-image{height:190px}.specs{gap:5px}.spec{padding:10px 6px}.spec strong{font-size:13px}.spec span{font-size:11px}.price{font-size:21px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">BMW <span>M</span> SHOWROOM</div>
+    <a class="back" href="m-series.html">← BACK TO M WORLD</a>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">THE PERFORMANCE COLLECTION</p>
+    <h1>MEET THE BMW <span style="color:#55dfff">M SERIES</span></h1>
+    <p class="lead">Explore BMW M performance cars and SUVs with pictures, key specifications, model highlights, and estimated starting prices. Choose a category or search for a model.</p>
+    <div class="stats">
+      <div class="stat">🏁 Performance coupes</div>
+      <div class="stat">⚡ Hybrid performance</div>
+      <div class="stat">🚙 High-performance SUVs</div>
+    </div>
+  </section>
+
+  <section class="toolbar">
+    <div class="filters">
+      <button class="filter active" data-filter="all">ALL MODELS</button>
+      <button class="filter" data-filter="coupe">COUPES & SEDANS</button>
+      <button class="filter" data-filter="suv">PERFORMANCE SUVs</button>
+      <button class="filter" data-filter="hybrid">HYBRID</button>
+    </div>
+    <input class="search" id="search" type="search" placeholder="Search BMW model..." aria-label="Search models">
+  </section>
+
+  <main class="grid" id="carGrid">
+    <article class="car-card" data-category="coupe" data-name="m2 coupe">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=85" alt="BMW sports coupe in a dramatic setting" loading="lazy">
+        <span class="image-tag">COMPACT PERFORMANCE</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M COUPÉ</span>
+        <h2>BMW M2 Coupe</h2>
+        <p class="description">A compact, rear-wheel-drive performance coupe built around a turbocharged inline-six engine.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$69,500 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>473 hp</strong><span>Power</span></div>
+          <div class="spec"><strong>3.0L</strong><span>Turbo inline-6</span></div>
+          <div class="spec"><strong>3.9 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>Six-cylinder M TwinPower Turbo engine, available six-speed manual or eight-speed automatic depending on version, adaptive M suspension, M-specific braking and driver-focused cockpit.</p>
+          <p><b>Note:</b> Availability and prices depend on market and configuration.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="coupe" data-name="m3 sedan">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1556189250-72ba954cfc2b?auto=format&fit=crop&w=1200&q=85" alt="Sporty BMW sedan" loading="lazy">
+        <span class="image-tag">SPORTS SEDAN</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M SEDAN</span>
+        <h2>BMW M3 Sedan</h2>
+        <p class="description">A practical four-door performance sedan with a motorsport-inspired chassis and turbocharged power.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$79,300 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>473 hp</strong><span>M3 Sedan</span></div>
+          <div class="spec"><strong>3.0L</strong><span>Turbo inline-6</span></div>
+          <div class="spec"><strong>4.1 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>Rear-wheel-drive M3 Sedan is rated at 473 hp. The M3 Competition is rated at 503 hp, while the Competition xDrive version is rated at 523 hp. Equipment and acceleration vary by version.</p>
+          <p>Highlights include an M-tuned chassis, performance-focused interior, configurable driving modes, and available all-wheel drive on selected versions.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="coupe" data-name="m4 coupe">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1200&q=85" alt="High-performance sports coupe" loading="lazy">
+        <span class="image-tag">SPORTS COUPE</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M COUPÉ</span>
+        <h2>BMW M4 Coupe</h2>
+        <p class="description">A two-door performance coupe combining muscular styling, strong acceleration, and track-focused engineering.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$82,200 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>473 hp</strong><span>M4 Coupe</span></div>
+          <div class="spec"><strong>3.0L</strong><span>Turbo inline-6</span></div>
+          <div class="spec"><strong>4.1 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The M4 Competition is rated at 503 hp, and the Competition xDrive at 523 hp. The lineup includes coupe and convertible versions, depending on configuration.</p>
+          <p>Features can include an M-specific differential, adaptive suspension, performance braking, and advanced digital displays.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="hybrid" data-name="m5 sedan">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=85" alt="Luxury performance car" loading="lazy">
+        <span class="image-tag">M HYBRID</span>
+      </div>
+      <div class="card-content">
+        <span class="category">PERFORMANCE SEDAN</span>
+        <h2>BMW M5 Sedan</h2>
+        <p class="description">Executive comfort meets a high-output V8 plug-in hybrid system and all-wheel-drive performance.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$123,300 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>717 hp</strong><span>System output</span></div>
+          <div class="spec"><strong>4.4L V8</strong><span>Plug-in hybrid</span></div>
+          <div class="spec"><strong>3.4 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The M Hybrid system combines a 4.4-litre twin-turbo V8 with an electric motor. Total output is rated at 717 hp and 738 lb-ft of system torque.</p>
+          <p>It combines luxury-sedan comfort with M xDrive all-wheel drive, an eight-speed M Steptronic transmission, and electrified driving capability.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="hybrid" data-name="m5 touring">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85" alt="Performance car with a long body profile" loading="lazy">
+        <span class="image-tag">PERFORMANCE WAGON</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M TOURING</span>
+        <h2>BMW M5 Touring</h2>
+        <p class="description">High performance with extra luggage space and everyday versatility in a powerful wagon body.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$125,300 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>717 hp</strong><span>System output</span></div>
+          <div class="spec"><strong>4.4L V8</strong><span>Plug-in hybrid</span></div>
+          <div class="spec"><strong>3.5 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The M5 Touring shares the M Hybrid powertrain concept with the M5 Sedan, combining a twin-turbo V8 and electric motor for a total system output of 717 hp.</p>
+          <p>Its wagon body provides additional cargo flexibility while retaining M performance hardware and M xDrive.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="suv" data-name="x5 m competition">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=1200&q=85" alt="Luxury performance SUV" loading="lazy">
+        <span class="image-tag">PERFORMANCE SUV</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M SUV</span>
+        <h2>BMW X5 M Competition</h2>
+        <p class="description">A high-performance luxury SUV with a twin-turbo V8, bold styling, and spacious seating.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$131,000 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>617 hp</strong><span>V8 output</span></div>
+          <div class="spec"><strong>4.4L V8</strong><span>Twin turbo</span></div>
+          <div class="spec"><strong>3.7 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The X5 M Competition uses a 4.4-litre twin-turbo V8 with 48-volt mild-hybrid assistance, an eight-speed M Steptronic transmission, and M xDrive.</p>
+          <p>It combines SUV practicality with an M-tuned chassis, adaptive suspension, and performance braking. Specifications may vary by model year and market.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="suv" data-name="x6 m competition">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1200&q=85" alt="Sporty coupe-style SUV" loading="lazy">
+        <span class="image-tag">COUPE SUV</span>
+      </div>
+      <div class="card-content">
+        <span class="category">M COUPE SUV</span>
+        <h2>BMW X6 M Competition</h2>
+        <p class="description">A coupe-inspired SUV with a dramatic roofline, powerful V8 engine, and M-specific performance systems.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$136,100 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>617 hp</strong><span>V8 output</span></div>
+          <div class="spec"><strong>4.4L V8</strong><span>Twin turbo</span></div>
+          <div class="spec"><strong>3.7 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The X6 M Competition combines a twin-turbo 4.4-litre V8 with M xDrive, an eight-speed M Steptronic transmission, and M-specific chassis tuning.</p>
+          <p>Its sloping rear roofline gives it a sportier silhouette than a traditional SUV. Equipment and specifications vary by market.</p>
+        </details>
+      </div>
+    </article>
+
+    <article class="car-card" data-category="hybrid suv" data-name="xm label">
+      <div class="car-image">
+        <img src="https://images.unsplash.com/photo-1514316703755-dca7d7d9d882?auto=format&fit=crop&w=1200&q=85" alt="Bold luxury performance vehicle" loading="lazy">
+        <span class="image-tag">FLAGSHIP M HYBRID SUV</span>
+      </div>
+      <div class="card-content">
+        <span class="category">XM LABEL</span>
+        <h2>BMW XM Label</h2>
+        <p class="description">A distinctive high-performance plug-in hybrid SUV with dramatic design and a powerful V8-electric system.</p>
+        <div class="price-label">Estimated starting price</div>
+        <div class="price">$159,600 <small>USD*</small></div>
+        <div class="specs">
+          <div class="spec"><strong>738 hp</strong><span>System output</span></div>
+          <div class="spec"><strong>4.4L V8</strong><span>Plug-in hybrid</span></div>
+          <div class="spec"><strong>3.6 s</strong><span>0–60 mph**</span></div>
+        </div>
+        <details><summary>More specifications & details</summary>
+          <p>The XM Label combines a 4.4-litre BMW M TwinPower Turbo V8 with an electric motor for 738 hp total system output and 738 lb-ft of system torque.</p>
+          <p>Highlights include M xDrive, plug-in hybrid capability, a performance-oriented chassis, and a distinctive luxury interior.</p>
+        </details>
+      </div>
+    </article>
+
+    <div class="empty" id="empty">No models found. Try another search.</div>
+  </main>
+
+  <section class="note">
+    <b>Price and image information:</b> Prices are approximate estimates in US dollars, not Pakistan prices. Local import duties, taxes, exchange rates, dealer charges, options, and availability can change the final price. Specifications may vary by market and trim. Images are illustrative automotive photos and may not show the exact model or trim named on each card.
+    <br><br>
+    *Starting prices can change. **Acceleration figures are estimates and vary by configuration.
+  </section>
+
+  <footer>BMW M SHOWROOM • PERFORMANCE CAR SHOWCASE</footer>
+
+  <script>
+    const filters = document.querySelectorAll('.filter');
+    const search = document.getElementById('search');
+    const cards = [...document.querySelectorAll('.car-card')];
+    const empty = document.getElementById('empty');
+    let activeFilter = 'all';
+
+    function updateModels() {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach(card => {
+        const categories = card.dataset.category.split(' ');
+        const matchesFilter = activeFilter === 'all' || categories.includes(activeFilter);
+        const matchesSearch = card.dataset.name.includes(query);
+        const show = matchesFilter && matchesSearch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      empty.style.display = visible ? 'none' : 'block';
+    }
+
+    filters.forEach(button => {
+      button.addEventListener('click', () => {
+        filters.forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        updateModels();
+      });
+    });
+
+    search.addEventListener('input', updateModels);
+  </script>
+</body>
+</html>
